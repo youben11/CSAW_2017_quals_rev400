@@ -47,11 +47,13 @@ b8 + b7 +      b5 + b4 + b3 + b2  + abs(b1-cst5) = res5
 
 b8 +      b6 + b5 + b4 + b3 + b2  + abs(b1-cst6) = res6
 
-     b7 + b6 + b5 + b4 + b3 + b2  + abs(b1-cst7) = res7
+   b7 + b6 + b5 + b4 + b3 + b2  + abs(b1-cst7) = res7
 
 with some linear algebra and some brute_force we can solve it, I used numpy to get this done [keygen.py](https://github.com/youben11/CSAW_2017_quals_rev400/blob/master/keygen.py)
 there is two value for cst and dec, each one of them give 8byte independently, so just comment one of them
+
 the first value of cst and dec give 10 possibilites but the first one seems to be the good one, after reorder of them it gives "{4r3alz_"
+
 the second then give 9 possibilites, reading carefully, the 8th seems to be the good one, after reoredr of them it gives "m0d3_y0}"
 
 the flag was "flag{4r3alz_m0d3_y0}"
