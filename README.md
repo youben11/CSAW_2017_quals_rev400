@@ -14,13 +14,19 @@ I first started it in qemu to have an idea of what going on, It prints some byte
 Then I started IDA to do some static analysis, the code was small since the MBR is limited to the size of 512bytes, the execution also start at the begining of the file wich is loaded at adr 0x7c00 (MBR stuff). After few readings, I realised that the important part of the code is in the range adr [0x066-0x0d3] the rest is some code for reading from the keyboard and printing the result and stuff like that, we will only focus on the important part (the entire assembly code is [there](https://github.com/youben11/CSAW_2017_quals_rev400/blob/master/main.ida) )
 
 0066 cmp     byte ptr ds:7DC8h, 13h ; check if the flag_length is < 19 and read more if yes, otherwise start checking the flag
+
 006B jle     loc_10D
+
 006F cmp     dword ptr ds:1234h, 67616C66h ; compare the first char of the flag with "flag"
+
 0078 jnz     loc_14D
+
 008B mov     si, 8 ; prepare si for a loop
 
 007C movaps  xmm0, xmmword ptr ds:1238h ; this load the 16 byte that follows "flag" into xmm0
+
 0081 movaps  xmm5, xmmword ptr ds:7C00h ; this load the 16 first byte of the binary ( remember that MBR is loaded at adr 0x7c00 )
+
 0086 pshufd  xmm0, xmm0, 1Eh ; this just change the position of the in xmm0
 
 I didn't focused on how pshufd really work because I know that I can reorder the flag using my eyes and because I was very tired x)
@@ -30,7 +36,9 @@ after that is a loop of 8 iteration, if a check is not correct it will break and
 this is the begining of the loop:
 
 008E movaps  xmm2, xmm0 ; move the changed flag to xmm2
+
 0091 andps   xmm2, xmmword ptr [si+7D90h] ; this just switch two byte of xmm2 to 0x00 depending on the si
+
 0096 psadbw  xmm5, xmm2 ; It will take me a lot to explain this intruction, please read the doc
 
 from psadbw the computation of the 16byte flag will be devided (go read the doc), the result of each part must be equal to some bytes stored at 0x7da8-0x7dc8 at each iteration, this lead us to some equation : 
