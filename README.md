@@ -1,8 +1,11 @@
-#Reversing400 realism:
+# Sudo_root
+-----------------------
+# Reversing400 realism:
 
 Did you know that x86 is really old? I found a really old Master Boot Record that I thought was quite interesting! At least, I think it's really old...
 
 qemu-system-i386 -drive format=raw,file=main.bin
+------------------------
 
 We were provided with a [main.bin](link) which seems to be a DOS/MBR boot sector, so we have to disassamble it as 16-bit assembly.
 
